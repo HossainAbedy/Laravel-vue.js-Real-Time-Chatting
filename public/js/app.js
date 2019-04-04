@@ -59995,36 +59995,64 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     getTime: function getTime() {
       var time = new Date();
       return time.getDay() + ':' + time.getHours() + ':' + time.getMinutes();
+    },
+    getOldMessages: function getOldMessages() {
+      var _this2 = this;
+
+      axios.post('/getOldMessages').then(function (response) {
+        console.log(response);
+
+        if (response.data != '') {
+          _this2.chat = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(erronr);
+      });
+    },
+    deleteSession: function deleteSession() {
+      var _this3 = this;
+
+      axios.post('/deleteSession').then(function (response) {
+        return _this3.$toaster.success('Chat history is deleted');
+      });
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this4 = this;
 
+    this.getOldMessages();
     Echo["private"]('chat').listen('ChatEvent', function (e) {
-      _this2.chat.message.push(e.message);
+      _this4.chat.message.push(e.message);
 
-      _this2.chat.user.push(e.user);
+      _this4.chat.user.push(e.user);
 
-      _this2.chat.color.push('info');
+      _this4.chat.color.push('info');
 
-      _this2.chat.time.push(_this2.getTime()); //  console.log(e);
+      _this4.chat.time.push(_this4.getTime()); //  console.log(e);
 
+
+      axios.post('/saveTosession', {
+        chat: _this4.chat
+      }).then(function (response) {})["catch"](function (error) {
+        console.log(error);
+      });
     }).listenForWhisper('typing', function (e) {
       if (e.name != '') {
-        _this2.typing = 'Typing.....';
+        _this4.typing = 'Typing.....';
       } else {
-        _this2.typing = '';
+        _this4.typing = '';
       }
-    }), Echo.join("chat").here(function (users) {
-      _this2.numberOfuser = users.length;
+    });
+    Echo.join("chat").here(function (users) {
+      _this4.numberOfuser = users.length;
     }).joining(function (user) {
-      _this2.numberOfuser += 1;
+      _this4.numberOfuser += 1;
 
-      _this2.$toaster.success(user.name + ' just joined this room');
+      _this4.$toaster.success(user.name + ' just joined this room');
     }).leaving(function (user) {
-      _this2.numberOfuser -= 1;
+      _this4.numberOfuser -= 1;
 
-      _this2.$toaster.danger(user.name + ' just left this room');
+      _this4.$toaster.danger(user.name + ' just left this room');
     });
   }
 });

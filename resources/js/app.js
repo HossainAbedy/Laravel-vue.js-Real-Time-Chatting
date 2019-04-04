@@ -57,14 +57,32 @@ const app = new Vue({
                 }
             },
 
-            
             getTime(){
                 let time = new Date();
                 return time.getDay()+':'+time.getHours()+':'+time.getMinutes();
-                 }   
+                 },   
+          
+            getOldMessages(){
+                axios.post('/getOldMessages')
+                     .then(response =>{
+                         console.log(response);
+                         if(response.data!=''){
+                            this.chat = response.data;
+                         }
+                     })
+                     .catch(error => {
+                         console.log(erronr);
+                     });
             },
-            mounted(){
 
+            deleteSession(){
+                axios.post('/deleteSession')
+                .then(response=> this.$toaster.success('Chat history is deleted') );
+
+            },
+        },
+            mounted(){
+                this.getOldMessages();
                 Echo.private('chat')
                     .listen('ChatEvent', (e) => {
                     this.chat.message.push(e.message);
@@ -72,6 +90,15 @@ const app = new Vue({
                     this.chat.color.push('info');
                     this.chat.time.push(this.getTime());
                     //  console.log(e);
+                    axios.post('/saveTosession',{
+                        chat:this.chat,
+                    })
+                     .then(response =>{
+                         
+                     })
+                     .catch(error => {
+                         console.log(error);
+                     });
                 })             
                      .listenForWhisper('typing', (e) => {
                     if(e.name!=''){
@@ -80,7 +107,8 @@ const app = new Vue({
                         this.typing='';
                     }  
                
-                }),
+                })
+
                 Echo.join(`chat`)
                     .here((users) => {
                     this.numberOfuser=users.length;

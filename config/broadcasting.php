@@ -35,6 +35,8 @@ return [
             'key' => env('PUSHER_APP_KEY'),
             'secret' => env('PUSHER_APP_SECRET'),
             'app_id' => env('PUSHER_APP_ID'),
+
+            //updated for broadcasting
             'options' => [             
                     'cluster' => 'ap2',
                     'encrypted' => true               
