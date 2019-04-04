@@ -77,7 +77,8 @@ const app = new Vue({
 
             deleteSession(){
                 axios.post('/deleteSession')
-                .then(response=> this.$toaster.success('Chat history is deleted') );
+                .then(response=> this.$toaster.error('Chat history is deleted') );
+                this.chat=''
 
             },
         },
@@ -119,7 +120,7 @@ const app = new Vue({
                     })
                     .leaving((user) => {
                         this.numberOfuser-=1;
-                        this.$toaster.danger(user.name +' just left this room');
+                        this.$toaster.warning(user.name +' just left this room');
                     });
         }
 });

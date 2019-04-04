@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-             <li class="list-group-item" :class="className"><slot></slot><span class="float-right" id='time'><br>{{time}}</span></li>
+             <li class="list-group-item " :class="className"><slot></slot><span class="float-right" id='time'><br>{{time}}</span></li>
              <small class="badge float-right" :class="badgeclass">{{user}}</small>
     </div>
 </template>

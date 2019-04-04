@@ -47762,7 +47762,7 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c(
       "li",
-      { staticClass: "list-group-item", class: _vm.className },
+      { staticClass: "list-group-item ", class: _vm.className },
       [
         _vm._t("default"),
         _c("span", { staticClass: "float-right", attrs: { id: "time" } }, [
@@ -60013,8 +60013,9 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       var _this3 = this;
 
       axios.post('/deleteSession').then(function (response) {
-        return _this3.$toaster.success('Chat history is deleted');
+        return _this3.$toaster.error('Chat history is deleted');
       });
+      this.chat = '';
     }
   },
   mounted: function mounted() {
@@ -60052,7 +60053,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     }).leaving(function (user) {
       _this4.numberOfuser -= 1;
 
-      _this4.$toaster.danger(user.name + ' just left this room');
+      _this4.$toaster.warning(user.name + ' just left this room');
     });
   }
 });

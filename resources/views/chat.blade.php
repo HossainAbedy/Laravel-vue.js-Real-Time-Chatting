@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{csrf_token()}}">
-    <title>Document</title>
+    <title>Real time Chatting</title>
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
 </head>
 <style>
@@ -15,9 +15,11 @@
     }
 </style>
 <body>
-    <div class="container">
-        <div class="row" id="app">
-            <div class="offset-4 col-4 offset-sm-1 col-sm-10">
+    <div class="container" id="app">
+        <div class="jumbotron">
+            <h2 style="color:black;text-align:center"><strong>Real time chatting platform<strong></h2>
+        <div class="row">
+            <div class="offset-4 col-4 offset-sm-1 col-sm-10 card bg-black">
                 <li class="list-group-item active">Chat Room 
                     <span class=" badge badge-pill badge-success float-right">ACTIVE : @{{numberOfuser}}</span>
                    </li>
@@ -34,6 +36,7 @@
                 <a href="" class="btn btn-danger float-right" @click.prevent='deleteSession'>Clear</a>  
             </div>
         </div>
+      </div>
     </div>
     <script src="{{asset('js/app.js')}}"></script>
 </body>
